@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         '/signin': (context) => SignInScreen(),
         '/home': (context) => HomeScreen(),
         '/register': (context) => RegisterScreen(),
-        '/editProfile': (context) => EditProfileScreen(), // Add this line
+        '/editProfile': (context) => EditProfileScreen(),
       },
     );
   }
@@ -268,11 +268,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void _register() async {
     final email = _emailController.text;
     final password = _passwordController.text;
-    final name = _nameController.text; // Adding the name field
+    final name = _nameController.text;
 
     if (email.isNotEmpty && password.isNotEmpty && name.isNotEmpty) {
-      await _dbHelper.registerUser(
-          email, password, name); // Include the name in the database call
+      await _dbHelper.registerUser(email, password, name);
       Navigator.pushNamed(context, '/signin');
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -574,7 +573,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     SizedBox(height: 12),
-                    // Cooking Time Categories
                     Text(
                       '-Cooking time-',
                       style: TextStyle(
@@ -951,7 +949,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   String _userId = '';
-  String _base64Image = ''; // To store the Base64 string of the selected image
+  String _base64Image = '';
 
   @override
   void initState() {
