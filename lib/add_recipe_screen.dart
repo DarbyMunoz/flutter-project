@@ -83,61 +83,100 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Add Recipe'),
+        backgroundColor: Colors.white,
+        elevation: 1,
+        foregroundColor: Colors.black,
       ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              GestureDetector(
-                onTap: _pickImage,
-                child: Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.circular(10),
+              Center(
+                child: GestureDetector(
+                  onTap: _pickImage,
+                  child: Container(
+                    width: 120,
+                    height: 120,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: Colors.grey.shade300),
+                    ),
+                    child: _imageFile != null
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.file(_imageFile!, fit: BoxFit.cover),
+                          )
+                        : Icon(Icons.add_a_photo,
+                            color: Colors.grey[700], size: 40),
                   ),
-                  child: _imageFile != null
-                      ? ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.file(_imageFile!, fit: BoxFit.cover),
-                        )
-                      : Icon(Icons.add_a_photo, color: Colors.grey[700]),
+                ),
+              ),
+              SizedBox(height: 24),
+              Text(
+                'Recipe Details',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               SizedBox(height: 16),
-              TextField(
-                controller: _nameController,
-                decoration: InputDecoration(labelText: 'Recipe Name'),
-              ),
+              _buildTextField(_nameController, 'Recipe Name', 1),
               SizedBox(height: 16),
-              TextField(
-                controller: _ingredientsController,
-                decoration: InputDecoration(labelText: 'Ingredients'),
-                maxLines: 5,
-              ),
+              _buildTextField(_ingredientsController, 'Ingredients', 5),
               SizedBox(height: 16),
-              TextField(
-                controller: _instructionsController,
-                decoration: InputDecoration(labelText: 'Instructions'),
-                maxLines: 5,
-              ),
+              _buildTextField(_instructionsController, 'Instructions', 5),
               SizedBox(height: 16),
-              TextField(
-                controller: _timeController,
-                decoration: InputDecoration(labelText: 'Cooking Time'),
-              ),
+              _buildTextField(
+                  _timeController, 'Cooking Time (e.g., 30 mins)', 1),
               SizedBox(height: 24),
-              _isUploading
-                  ? CircularProgressIndicator()
-                  : ElevatedButton(
-                      onPressed: _addRecipe,
-                      child: Text('Add Recipe'),
-                    ),
-              SizedBox(height: 16),
+              Center(
+                child: _isUploading
+                    ? CircularProgressIndicator()
+                    : ElevatedButton(
+                        onPressed: _addRecipe,
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 40, vertical: 12),
+                        ),
+                        child:
+                            Text('Add Recipe', style: TextStyle(fontSize: 16)),
+                      ),
+              ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTextField(
+      TextEditingController controller, String label, int maxLines) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.1),
+            spreadRadius: 1,
+            blurRadius: 5,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
+      child: TextField(
+        controller: controller,
+        maxLines: maxLines,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          labelText: label,
+          border: InputBorder.none,
         ),
       ),
     );
