@@ -822,24 +822,22 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.white,
-        shape: CircularNotchedRectangle(),
-        notchMargin: 8.0,
-        child: IconButton(
-          icon: Icon(
-            Icons.add_circle,
-            size: 40,
-            color: Colors.green,
-          ),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => AddRecipeScreen()),
-            );
-          },
+      floatingActionButton: FloatingActionButton.small(
+        shape: CircleBorder(),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddRecipeScreen()),
+          );
+        },
+        child: Icon(
+          Icons.add,
+          size: 30,
+          color: Colors.white,
         ),
+        backgroundColor: Colors.green,
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
